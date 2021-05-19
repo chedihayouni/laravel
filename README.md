@@ -1,62 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## About Project
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Le projet est une application basique de gestion des "To Do" se compose d'une partie backend développé en Laravel et une partie frontEnd développé en React JS
 
-## About Laravel
+- Laravel:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+    - Le projet Laravel peut être découpé en deux grandes parties une pour gérer l'authentifaction et un CRUD pour gérer les To Dos.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    - L'authentification est gérée par Laravel Sanctum qui fournit un système d'authentification ultra-léger pour les SPA et de générer 
+      des jetons API (https://laravel.com/docs/8.x/sanctum).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    - La validation des requêtes est gérée par le validateur natif de Laravel.
 
-## Learning Laravel
+    - La sérilialisation/deserialisation des données est gérée par une librairie tierce Fractal (https://fractal.thephpleague.com).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- React JS:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    - Le projet React JS une application frontend basique qui utilise la version 17 de React développé entièrement en javascript.
 
-## Laravel Sponsors
+    - Une architecture qui se base sur le découplage des composants utilisé dans ce projet (parentComponent/childComponent ou containerComponent/childComponent):
+       . Centraliser les traitements et la connexion au store et la gestion des stores dans les composants parents.
+       . Les composants fils contiennent que du JSX au contraire des containers. 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    - L'application utilise pour la gestion du store Redux(Thunk) (http://redux.js.org/) qui est une bibliothèque JS permettant de gérer l’état d’une application de manière déterministe.
 
-### Premium Partners
+    - Les services sont utilisés pour la communication avec la partie back via la bibliothèque Axios (https://axios-http.com/docs/intro)
+  
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+- Instalation:
 
-## Contributing
+    1- Crée un dossier dans lequel on va cloner les deux projets:
+      # mkdir projects && cd projects
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    2- Cloner le projet Laravel à partir du repository https://github.com/chedihayouni/laravel:
+      
+      # git clone https://github.com/chedihayouni/laravel
 
-## Code of Conduct
+    3- Cloner le projet React JS à partir du repository https://github.com/chedihayouni/react:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+      # git clone https://github.com/chedihayouni/react
+    
+    4- Copier le fichier docker.compose qui existe dans le projet Laravel et le coller au même niveau des deux projets dans le dossier créer dans la première étape.
 
-## Security Vulnerabilities
+    5- Lancer la commande pour créer les images:
+    
+      # docker-compose build
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    6- Lancer la commande pour lancer le projet:
+    
+      # docker-compose up
 
-## License
+    7- Se connecter sur phpMyAdmin et créer la BD avec le nom (laravel) http://localhost:8090:
+    
+       - Username: root
+       
+       - Password: root
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+    7- Se connecter sur le container Laravel pour créer la BD et lancer les migrations:
+    
+      # docker-compose exec laravel_app bash
+
+      # php artisan migrate --force
+
+
+    PS: Si vous rencontrez un problème il faut vérifier les droits sur les dossiers: logs, migrations ...
+
+Liens:
+ 	- FrontEnd: http://localhost:3005
+ 	- BackEnd: http://localhost:8000
+ 	- phpmyadmin: http://localhost:8090
