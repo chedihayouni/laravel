@@ -1,0 +1,54 @@
+version: '3.5'
+services:
+  react_app:
+    build:
+      context: ./react_app
+    volumes:
+      - ./react_app:/usr/react_app
+    image: react_app
+    container_name: react_app
+    ports: 
+      - 3005:3000
+
+  laravel_app:
+    build:
+      context: ./laravel_app
+    image: laravel_app
+    container_name: laravel_app
+    env_file:
+      - ./laravel_app/.env
+    volumes:
+      - ./laravel_app:/var/www/html
+    depends_on:
+      - db
+    command: bash -c "composer install --no-interaction --no-scripts --prefer-dist && php-fpm"
+
+  reverse_proxy:
+    build:
+      context: ./laravel_app/reverse_proxy
+    image: reverse_proxy
+    container_name: reverse_proxy
+    depends_on:
+      - laravel_app
+    ports:
+      - 8000:80
+    volumes:
+      - ./laravel_app:/var/www/html
+
+  db:
+    image: mysql:5.7
+    ports:
+      - 3307:3306
+    environment:
+      DB_PASSWORD: root
+    container_name: db
+    volumes:
+      - ./var/:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8090:80
+    container_name: phpmyadmin
+    environment:
+      - PMA_PORT=3307
