@@ -49,19 +49,6 @@ Le projet est une application basique de gestion des "To Do" se compose d'une pa
     
       # docker-compose up
 
-    7- Se connecter sur phpMyAdmin et créer la BD avec le nom (laravel) http://localhost:8090:
-    
-       - Username: root
-       
-       - Password: root
-
-
-    7- Se connecter sur le container Laravel pour créer la BD et lancer les migrations:
-    
-      # docker-compose exec laravel_app bash
-
-      # php artisan migrate --force
-
 
     PS: Si vous rencontrez un problème il faut vérifier les droits sur les dossiers: logs, migrations ...
 

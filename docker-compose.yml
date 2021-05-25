@@ -21,7 +21,7 @@ services:
       - ./laravel_app:/var/www/html
     depends_on:
       - db
-    command: bash -c "composer install --no-interaction --no-scripts --prefer-dist && php-fpm"
+    command: bash -c "composer install --no-interaction --no-scripts --prefer-dist && php artisan db:create && php artisan migrate --force && php-fpm"
 
   reverse_proxy:
     build:
@@ -31,7 +31,7 @@ services:
     depends_on:
       - laravel_app
     ports:
-      - 8000:80
+      - 8002:80
     volumes:
       - ./laravel_app:/var/www/html
 
